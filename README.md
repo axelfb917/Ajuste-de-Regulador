@@ -1,6 +1,6 @@
 # Convertidor m/min ↔ m/s
 
-Página ultra-ligera para pasar de metros por minuto a metros por segundo  
+Página para pasar de metros por minuto a metros por segundo  
 y viceversa. Útil en el ajuste de reguladores de velocidad de elevadores.
 
 ## Uso
