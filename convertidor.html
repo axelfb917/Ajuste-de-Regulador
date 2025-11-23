@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Convertidor m/min ⇄ m/s – Ajuste de regulador</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;background:#f5f7fa;display:flex;justify-content:center;align-items:center;height:100vh;margin:0}
+    .card{background:#fff;padding:2rem 2.5rem;border-radius:8px;box-shadow:0 4px 18px rgba(0,0,0,.15);width:320px;text-align:center}
+    h2{margin-top:0;color:#003366}
+    label{display:block;margin:.8rem 0 .3rem;font-weight:600}
+    input{width:100%;padding:.6rem;font-size:1.1rem;border:1px solid #bbb;border-radius:4px;box-sizing:border-box}
+    .result{margin-top:1.2rem;font-size:1.3rem;font-weight:700;color:#0066cc}
+    .formula{margin-top:1rem;font-size:.85rem;color:#555}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Convertidor velocidad</h2>
+
+    <label for="mpm">Metros por minuto (m/min)</label>
+    <input id="mpm" type="number" step="any" placeholder="p. ej. 120">
+
+    <label for="mps">Metros por segundo (m/s)</label>
+    <input id="mps" type="number" step="any" placeholder="p. ej. 2">
+
+    <div class="result" id="result">Esperando entrada…</div>
+    <div class="formula">1 m/min = 0,0166667 m/s</div>
+  </div>
+
+  <script>
+    const $ = id => document.getElementById(id);
+    const mpmInput = $('mpm');
+    const mpsInput = $('mps');
+    const result   = $('result');
+
+    function round(v) { return Math.round(v * 1e6) / 1e6; }
+
+    function updateFromMPM() {
+      const v = parseFloat(mpmInput.value);
+      if (!isNaN(v)) {
+        const mps = v / 60;
+        mpsInput.value = round(mps);
+        result.textContent = `${v} m/min = ${round(mps)} m/s`;
+      } else {
+        mpsInput.value = '';
+        result.textContent = 'Esperando entrada…';
+      }
+    }
+
+    function updateFromMPS() {
+      const v = parseFloat(mpsInput.value);
+      if (!isNaN(v)) {
+        const mpm = v * 60;
+        mpmInput.value = round(mpm);
+        result.textContent = `${round(mpm)} m/min = ${v} m/s`;
+      } else {
+        mpmInput.value = '';
+        result.textContent = 'Esperando entrada…';
+      }
+    }
+
+    mpmInput.addEventListener('input', updateFromMPM);
+    mpsInput.addEventListener('input', updateFromMPS);
+  </script>
+</body>
+</html>
