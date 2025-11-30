@@ -2,66 +2,269 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Convertidor m/min ⇄ m/s – Ajuste de regulador</title>
+  <title>Convertidor de Velocidad</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body{font-family:Arial,Helvetica,sans-serif;background:#f5f7fa;display:flex;justify-content:center;align-items:center;height:100vh;margin:0}
-    .card{background:#fff;padding:2rem 2.5rem;border-radius:8px;box-shadow:0 4px 18px rgba(0,0,0,.15);width:320px;text-align:center}
-    h2{margin-top:0;color:#003366}
-    label{display:block;margin:.8rem 0 .3rem;font-weight:600}
-    input{width:100%;padding:.6rem;font-size:1.1rem;border:1px solid #bbb;border-radius:4px;box-sizing:border-box}
-    .result{margin-top:1.2rem;font-size:1.3rem;font-weight:700;color:#0066cc}
-    .formula{margin-top:1rem;font-size:.85rem;color:#555}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+    
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 420px;
+      animation: slideIn 0.5s ease-out;
+    }
+    
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    h2 {
+      text-align: center;
+      color: #667eea;
+      margin-bottom: 2rem;
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+    
+    .input-group {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #333;
+      font-size: 0.95rem;
+    }
+    
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: #f8f9fa;
+      border-radius: 12px;
+      border: 2px solid #e0e0e0;
+      transition: all 0.3s ease;
+    }
+    
+    .input-wrapper:focus-within {
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      background: #fff;
+    }
+    
+    input {
+      flex: 1;
+      padding: 0.9rem 1rem;
+      font-size: 1.1rem;
+      border: none;
+      background: transparent;
+      outline: none;
+      color: #333;
+    }
+    
+    input::placeholder {
+      color: #aaa;
+    }
+    
+    .unit {
+      padding: 0 1rem;
+      font-weight: 600;
+      color: #667eea;
+      font-size: 0.95rem;
+      white-space: nowrap;
+    }
+    
+    .result {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 12px;
+      text-align: center;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 600;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .formula {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background: #f8f9fa;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      color: #666;
+      text-align: center;
+      border-left: 3px solid #667eea;
+    }
+    
+    .formula-title {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 0.3rem;
+    }
+    
+    @media (max-width: 480px) {
+      .card {
+        padding: 1.5rem;
+      }
+      
+      h2 {
+        font-size: 1.5rem;
+      }
+      
+      input {
+        font-size: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="card">
-    <h2>Convertidor velocidad</h2>
-
-    <label for="mpm">Metros por minuto (m/min)</label>
-    <input id="mpm" type="number" step="any" placeholder="p. ej. 120">
-
-    <label for="mps">Metros por segundo (m/s)</label>
-    <input id="mps" type="number" step="any" placeholder="p. ej. 2">
-
-    <div class="result" id="result">Esperando entrada…</div>
-    <div class="formula">1 m/min = 0,0166667 m/s</div>
+    <h2>⚡ Convertidor de Velocidad</h2>
+    
+    <div class="input-group">
+      <label for="mpm">Metros por minuto</label>
+      <div class="input-wrapper">
+        <input id="mpm" type="number" step="any" placeholder="Ej: 120">
+        <span class="unit">m/min</span>
+      </div>
+    </div>
+    
+    <div class="input-group">
+      <label for="mps">Metros por segundo</label>
+      <div class="input-wrapper">
+        <input id="mps" type="number" step="any" placeholder="Ej: 2">
+        <span class="unit">m/s</span>
+      </div>
+    </div>
+    
+    <div class="input-group">
+      <label for="fpm">Pies por minuto</label>
+      <div class="input-wrapper">
+        <input id="fpm" type="number" step="any" placeholder="Ej: 394">
+        <span class="unit">ft/min</span>
+      </div>
+    </div>
+    
+    <div class="result" id="result">Ingresa un valor para convertir</div>
+    
+    <div class="formula">
+      <div class="formula-title">Conversiones:</div>
+      1 m/min = 0.0167 m/s = 3.281 ft/min
+    </div>
   </div>
-
+  
   <script>
     const $ = id => document.getElementById(id);
     const mpmInput = $('mpm');
     const mpsInput = $('mps');
-    const result   = $('result');
-
-    function round(v) { return Math.round(v * 1e6) / 1e6; }
-
+    const fpmInput = $('fpm');
+    const result = $('result');
+    
+    let updating = false;
+    
+    function round(v) { 
+      return Math.round(v * 1e6) / 1e6; 
+    }
+    
     function updateFromMPM() {
+      if (updating) return;
+      updating = true;
+      
       const v = parseFloat(mpmInput.value);
       if (!isNaN(v)) {
         const mps = v / 60;
+        const fpm = v * 3.28084;
+        
         mpsInput.value = round(mps);
-        result.textContent = `${v} m/min = ${round(mps)} m/s`;
+        fpmInput.value = round(fpm);
+        result.textContent = `${v} m/min = ${round(mps)} m/s = ${round(fpm)} ft/min`;
       } else {
         mpsInput.value = '';
-        result.textContent = 'Esperando entrada…';
+        fpmInput.value = '';
+        result.textContent = 'Ingresa un valor para convertir';
       }
+      
+      updating = false;
     }
-
+    
     function updateFromMPS() {
+      if (updating) return;
+      updating = true;
+      
       const v = parseFloat(mpsInput.value);
       if (!isNaN(v)) {
         const mpm = v * 60;
+        const fpm = mpm * 3.28084;
+        
         mpmInput.value = round(mpm);
-        result.textContent = `${round(mpm)} m/min = ${v} m/s`;
+        fpmInput.value = round(fpm);
+        result.textContent = `${round(mpm)} m/min = ${v} m/s = ${round(fpm)} ft/min`;
       } else {
         mpmInput.value = '';
-        result.textContent = 'Esperando entrada…';
+        fpmInput.value = '';
+        result.textContent = 'Ingresa un valor para convertir';
       }
+      
+      updating = false;
     }
-
+    
+    function updateFromFPM() {
+      if (updating) return;
+      updating = true;
+      
+      const v = parseFloat(fpmInput.value);
+      if (!isNaN(v)) {
+        const mpm = v / 3.28084;
+        const mps = mpm / 60;
+        
+        mpmInput.value = round(mpm);
+        mpsInput.value = round(mps);
+        result.textContent = `${round(mpm)} m/min = ${round(mps)} m/s = ${v} ft/min`;
+      } else {
+        mpmInput.value = '';
+        mpsInput.value = '';
+        result.textContent = 'Ingresa un valor para convertir';
+      }
+      
+      updating = false;
+    }
+    
     mpmInput.addEventListener('input', updateFromMPM);
     mpsInput.addEventListener('input', updateFromMPS);
+    fpmInput.addEventListener('input', updateFromFPM);
   </script>
 </body>
 </html>
